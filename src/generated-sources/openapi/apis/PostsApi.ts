@@ -28,7 +28,7 @@ export class PostsApi extends runtime.BaseAPI {
     /**
      * Creates a new post
      */
-    async createPostRaw(): Promise<runtime.ApiResponse<Array<Post>>> {
+    async createPostRaw(): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -40,21 +40,20 @@ export class PostsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(PostFromJSON));
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * Creates a new post
      */
-    async createPost(): Promise<Array<Post>> {
-        const response = await this.createPostRaw();
-        return await response.value();
+    async createPost(): Promise<void> {
+        await this.createPostRaw();
     }
 
     /**
      * Returns all posts
      */
-    async getPostsRaw(): Promise<runtime.ApiResponse<void>> {
+    async getPostsRaw(): Promise<runtime.ApiResponse<Array<Post>>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -66,14 +65,15 @@ export class PostsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(PostFromJSON));
     }
 
     /**
      * Returns all posts
      */
-    async getPosts(): Promise<void> {
-        await this.getPostsRaw();
+    async getPosts(): Promise<Array<Post>> {
+        const response = await this.getPostsRaw();
+        return await response.value();
     }
 
 }

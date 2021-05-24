@@ -12,6 +12,10 @@ paths:
       responses:
         "200":
           description: Successful response
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/PostsListResponse"
     post:
       description: Creates a new post
       tags: ["Posts"]
@@ -19,10 +23,6 @@ paths:
       responses:
         "200":
           description: Successful response
-          content:
-            "application/json":
-              schema:
-                $ref: "#/components/schemas/PostsListResponse"
 components:
   schemas:
     PostsListResponse:
