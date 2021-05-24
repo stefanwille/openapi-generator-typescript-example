@@ -1,0 +1,5 @@
+.openapi-generator-ignore
+apis/PostsApi.ts
+apis/index.ts
+index.ts
+runtime.ts

@@ -7,6 +7,15 @@ paths:
   /posts:
     get:
       description: Returns all posts
+      tags: ['Posts']
+      operationId: "getPosts"
+      responses:
+        '200':
+          description: Successful response
+    post:
+      description: Creates a new post
+      tags: ['Posts']
+      operationId: "createPost"
       responses:
         '200':
           description: Successful response
