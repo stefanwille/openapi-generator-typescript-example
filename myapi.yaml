@@ -7,17 +7,41 @@ paths:
   /posts:
     get:
       description: Returns all posts
-      tags: ['Posts']
+      tags: ["Posts"]
       operationId: "getPosts"
       responses:
-        '200':
+        "200":
           description: Successful response
     post:
       description: Creates a new post
-      tags: ['Posts']
+      tags: ["Posts"]
       operationId: "createPost"
       responses:
-        '200':
+        "200":
           description: Successful response
-
-
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/PostsListResponse"
+components:
+  schemas:
+    PostsListResponse:
+      "type": "array"
+      "items":
+        $ref: "#/components/schemas/Post"
+    Post:
+      "type": "object"
+      "required":
+        - "id"
+        - "userId"
+        - "title"
+        - "completed"
+      "properties":
+        id:
+          type: "integer"
+        userId:
+          type: "integer"
+        title:
+          type: "string"
+        completed:
+          type: "string"

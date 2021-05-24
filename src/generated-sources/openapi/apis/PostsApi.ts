@@ -14,6 +14,11 @@
 
 
 import * as runtime from '../runtime';
+import {
+    Post,
+    PostFromJSON,
+    PostToJSON,
+} from '../models';
 
 /**
  * 
@@ -23,7 +28,7 @@ export class PostsApi extends runtime.BaseAPI {
     /**
      * Creates a new post
      */
-    async createPostRaw(): Promise<runtime.ApiResponse<void>> {
+    async createPostRaw(): Promise<runtime.ApiResponse<Array<Post>>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -35,14 +40,15 @@ export class PostsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(PostFromJSON));
     }
 
     /**
      * Creates a new post
      */
-    async createPost(): Promise<void> {
-        await this.createPostRaw();
+    async createPost(): Promise<Array<Post>> {
+        const response = await this.createPostRaw();
+        return await response.value();
     }
 
     /**
