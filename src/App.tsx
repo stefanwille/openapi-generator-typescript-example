@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Configuration, PostsApi } from "./generated-sources/openapi";
 
-function App() {
+const configuration = new Configuration({
+  basePath: window.location.origin,
+  credentials: "same-origin",
+});
+
+const postsApi = new PostsApi(configuration);
+
+const App = () => {
+  const onClick = () => {
+    postsApi.getPosts();
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <button onClick={onClick}>Get Posts</button>
       </header>
     </div>
   );
-}
+};
 
 export default App;
