@@ -18,6 +18,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
+    "codegen": "openapi-generator-cli generate -i ./myapi.yaml -g typescript-fetch -o generated-sources/openapi --additional-properties=supportsES6=true,npmVersion=6.9.0",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

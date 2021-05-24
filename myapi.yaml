@@ -1,0 +1,14 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: My API
+  description: An OpenAPI example API
+paths:
+  /posts:
+    get:
+      description: Returns all posts
+      responses:
+        '200':
+          description: Successful response
+
+
