@@ -1,10 +1,9 @@
-import { useState, VFC } from "react";
+import { useState } from "react";
 import "./App.css";
 import { Configuration, Post, PostsApi } from "./generated-sources/openapi";
 
 const configuration = new Configuration({
   basePath: window.location.origin,
-  credentials: "same-origin",
 });
 
 const postsApi = new PostsApi(configuration);
@@ -25,7 +24,7 @@ const App = () => {
   );
 };
 
-const PostsTable: VFC<{ posts: Post[] }> = ({ posts }) => (
+const PostsTable = ({ posts }: { posts: Post[] }) => (
   <table>
     <thead>
       <tr>
