@@ -1,5 +1,6 @@
+import { useState, VFC } from "react";
 import "./App.css";
-import { Configuration, PostsApi } from "./generated-sources/openapi";
+import { Configuration, Post, PostsApi } from "./generated-sources/openapi";
 
 const configuration = new Configuration({
   basePath: window.location.origin,
@@ -9,17 +10,42 @@ const configuration = new Configuration({
 const postsApi = new PostsApi(configuration);
 
 const App = () => {
-  const onClick = () => {
-    postsApi.getPosts();
+  const [posts, setPosts] = useState<Post[] | null>(null);
+
+  const onClick = async () => {
+    const loadedPosts = await postsApi.getPosts();
+    setPosts(loadedPosts);
   };
 
   return (
     <div className="App">
-      <header className="App-header">
-        <button onClick={onClick}>Get Posts</button>
-      </header>
+      <button onClick={onClick}>Get Posts</button>
+      {posts && <PostsTable posts={posts} />}
     </div>
   );
 };
+
+const PostsTable: VFC<{ posts: Post[] }> = ({ posts }) => (
+  <table>
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>userId</th>
+        <th>title</th>
+        <th>completed</th>
+      </tr>
+    </thead>
+    <tbody>
+      {posts.map(({ id, userId, title, completed }) => (
+        <tr>
+          <td>{id}</td>
+          <td>{userId}</td>
+          <td>{title}</td>
+          <td>{completed}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+);
 
 export default App;
