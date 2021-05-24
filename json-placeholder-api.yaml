@@ -1,8 +1,8 @@
 openapi: 3.0.0
 info:
   version: 1.0.0
-  title: My API
-  description: An OpenAPI example API
+  title: JSON Placeholder API
+  description: See https://jsonplaceholder.typicode.com/
 paths:
   /posts:
     get:
@@ -15,17 +15,34 @@ paths:
           content:
             "application/json":
               schema:
-                $ref: "#/components/schemas/PostsListResponse"
-    post:
-      description: Creates a new post
+                $ref: "#/components/schemas/PostsList"
+
+  /posts/{id}:
+    get:
+      description: Returns a post by id
       tags: ["Posts"]
-      operationId: "createPost"
+      operationId: "getPost"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The user id.
+          schema:
+            type: integer
+            format: int64
       responses:
         "200":
           description: Successful response
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Post"
+        "404":
+          description: Post not found
+
 components:
   schemas:
-    PostsListResponse:
+    PostsList:
       "type": "array"
       "items":
         $ref: "#/components/schemas/Post"

@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * My API
- * An OpenAPI example API
+ * JSON Placeholder API
+ * See https://jsonplaceholder.typicode.com/
  *
  * The version of the OpenAPI document: 1.0.0
  * 
@@ -20,34 +20,43 @@ import {
     PostToJSON,
 } from '../models';
 
+export interface GetPostRequest {
+    id: number;
+}
+
 /**
  * 
  */
 export class PostsApi extends runtime.BaseAPI {
 
     /**
-     * Creates a new post
+     * Returns a post by id
      */
-    async createPostRaw(): Promise<runtime.ApiResponse<void>> {
+    async getPostRaw(requestParameters: GetPostRequest): Promise<runtime.ApiResponse<Post>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getPost.');
+        }
+
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/posts`,
-            method: 'POST',
+            path: `/posts/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
             headers: headerParameters,
             query: queryParameters,
         });
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => PostFromJSON(jsonValue));
     }
 
     /**
-     * Creates a new post
+     * Returns a post by id
      */
-    async createPost(): Promise<void> {
-        await this.createPostRaw();
+    async getPost(requestParameters: GetPostRequest): Promise<Post> {
+        const response = await this.getPostRaw(requestParameters);
+        return await response.value();
     }
 
     /**

@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * My API
- * An OpenAPI example API
+ * JSON Placeholder API
+ * See https://jsonplaceholder.typicode.com/
  *
  * The version of the OpenAPI document: 1.0.0
  * 
